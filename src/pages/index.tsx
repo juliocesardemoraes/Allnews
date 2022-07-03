@@ -18,13 +18,27 @@ interface IData {
 }
 
 /**
+ * @param {Array<IArt>} data articles coming from database
+ * @return {JSX.Element}: JSX Element iterating through articles
+ */
+function handleData(data: IData) {
+  return (
+    <div>
+      <h1>Articles</h1>
+      {data?.data?.map((article, index) => (
+        <h1 key={article._id}>{article.title}</h1>
+      ))}
+    </div>
+  );
+}
+
+/**
  * This is the home page
  * @param {Array<IArt>} data articles coming from database
  * @return {JSX.Element}: JSX element for rendering home page
  */
 export default function Home(data: IData): JSX.Element {
-  console.log(data);
-  return <h1>ah</h1>;
+  return <>{handleData(data)}</>;
 }
 
 export const getStaticProps = async (
@@ -33,7 +47,7 @@ export const getStaticProps = async (
   await dbConnect();
 
   let data: Array<IArt>;
-  data = await Article.find({}).sort({ date: -1 }).limit(5);
+  data = await Article.find({}).sort({ date: -1 }).limit(20);
   data = JSON.parse(JSON.stringify(data));
   return {
     props: { data },
