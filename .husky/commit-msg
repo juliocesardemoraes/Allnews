@@ -1,6 +1,7 @@
-npm run format
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
+
+npm run format
 
 echo '🏗️👷 Styling, testing and building your project before committing'
 
@@ -14,8 +15,8 @@ npm run check-format ||
 # Check ESLint Standards
 npm run check-lint ||
 (
-        echo 'ESLint Check Failed. ❌'
-        false; 
+    echo 'ESLint Check Failed. ❌'
+    false; 
 )
 
 # Check tsconfig standards
